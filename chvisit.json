@@ -1,23 +1,27 @@
-[
-    {
-        "id": "1",
-        "name": "Update earning news 😍",
-        "username": "@updateearningnewschannl"
-    },
-    {
-        "id": "2",
-        "name": "Alamin Web3 Official",
-        "username": "@VerifiedCryptoNetwork"
-    },
-    {
-        "id": "3",
-        "name": "incomE24",
-        "username": "@incomeb24"
-    },
-    {
-        "id": "4",
-        "name": "❤️ Technical Bro BD ❤️",
-        "username": "@technicalbrobd"
-    }
-    
-]
+{
+    "max_cycle":"0",
+    "cycle_break_min":"120",
+    "cycle_break_max":"300",
+    "channels": [
+        {
+            "id": "1",
+            "name": "Crypto Real Investor",
+            "username": "@Crypto47k"
+        },
+        {
+            "id": "2",
+            "name": "Alamin Web3 Official",
+            "username": "@VerifiedCryptoNetwork"
+        },
+        {
+            "id": "3",
+            "name": "Dk Big community",
+            "username": "@onlinezce"
+        },
+        {
+            "id": "4",
+            "name": "❤️ Technical Bro BD ❤️",
+            "username": "@technicalbrobd"
+        }
+    ]
+}
