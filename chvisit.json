@@ -1,5 +1,5 @@
 {
-    "max_cycle":"0",
+    "max_cycle":"1",
     "cycle_break_min":"120",
     "cycle_break_max":"300",
     "channels": [
