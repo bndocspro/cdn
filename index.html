@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Package Vault | 67 Zipped Bot Files</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0d14;
+            --bg-secondary: #121824;
+            --bg-card: rgba(22, 30, 46, 0.65);
+            --bg-card-hover: rgba(30, 41, 64, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(99, 102, 241, 0.4);
+            
+            --accent-primary: #6366f1;
+            --accent-primary-hover: #4f46e5;
+            --accent-secondary: #06b6d4;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+            --accent-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        /* Subtle Grid Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            color: #818cf8;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .badge-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+            box-shadow: 0 0 10px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        /* Server / Worker Info Banner */
+        .server-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(18, 24, 36, 0.8);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            max-width: fit-content;
+            margin: 0 auto;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            backdrop-filter: blur(12px);
+        }
+
+        .server-bar span.url {
+            color: var(--accent-secondary);
+            word-break: break-all;
+        }
+
+        /* Control Panel / Filter & Action Bar */
+        .control-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            background: rgba(10, 13, 20, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: var(--font-sans);
+            transition: all 0.25s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(10, 13, 20, 0.6);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+        }
+
+        .batch-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.65rem 1.2rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Stats & Counter Bar */
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0 0.5rem;
+        }
+
+        .stats-count span {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Grid Layout for 67 Bot Cards */
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* Card Component */
+        .bot-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.6), var(--accent-glow);
+        }
+
+        .bot-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .bot-id-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .file-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #818cf8;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .filename {
+            font-family: var(--font-mono);
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+        }
+
+        .download-btn {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            opacity: 0.92;
+            transform: scale(1.02);
+        }
+
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .empty-state svg {
+            margin-bottom: 1rem;
+            color: var(--text-dim);
+        }
+
+        /* Modal Dialog for Batch Downloads */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 7, 12, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .range-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(18, 24, 36, 0.95);
+            border: 1px solid var(--accent-primary);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1), fadeOut 0.3s ease 2.7s forwards;
+            backdrop-filter: blur(12px);
+            pointer-events: auto;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.1rem; }
+            .control-panel { flex-direction: column; align-items: stretch; }
+            .filter-tabs { overflow-x: auto; justify-content: flex-start; }
+            .bot-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .batch-actions { width: 100%; justify-content: space-between; }
+            .btn { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-pattern"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="badge-pill">
+                <span class="badge-pulse"></span>
+                <span>Active Vault Repository</span>
+            </div>
+            <h1>Bot Package Downloader</h1>
+            <p class="subtitle">Access and download all 67 individual bot zip packages directly from the high-speed worker CDN endpoint.</p>
+            
+            <div class="server-bar">
+                <span>CDN Base:</span>
+                <span class="url">https://pcdrive.m-jihad3k.workers.dev/bot/bot{id}.zip</span>
+            </div>
+        </header>
+
+        <!-- Search & Control Panel -->
+        <div class="control-panel">
+            <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search by Bot ID (e.g. 5, 24, bot10)..." onkeyup="filterBots()">
+            </div>
+
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="setFilter('all', this)">All (67)</button>
+                <button class="tab-btn" onclick="setFilter('1-20', this)">1 - 20</button>
+                <button class="tab-btn" onclick="setFilter('21-40', this)">21 - 40</button>
+                <button class="tab-btn" onclick="setFilter('41-67', this)">41 - 67</button>
+            </div>
+
+            <div class="batch-actions">
+                <button class="btn btn-secondary" onclick="openRangeModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Batch Download
+                </button>
+                <button class="btn btn-primary" onclick="copyAllLinks()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy All Links
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Status Bar -->
+        <div class="stats-bar">
+            <div class="stats-count">
+                Showing <span id="visibleCount">67</span> of <span>67</span> Packages
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-dim);">
+                Click any card to start download instantly
+            </div>
+        </div>
+
+        <!-- Bot Grid -->
+        <div class="bot-grid" id="botGrid">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <!-- Empty Filter State -->
+        <div class="empty-state" id="emptyState">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <h3>No Bot Files Found</h3>
+            <p style="margin-top: 6px;">No package matched your search criteria. Try a different ID.</p>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 PCDrive Cloud Storage Vault &bull; 67 Bot Archive Repository</p>
+        </footer>
+    </div>
+
+    <!-- Batch Download Modal -->
+    <div class="modal-overlay" id="rangeModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Batch Download Range</h3>
+                <button class="close-modal" onclick="closeRangeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.9rem; color: var(--text-muted);">
+                    Select a range of Bot IDs to download sequentially. Note: Your browser may ask for permission to download multiple files.
+                </p>
+                <div class="range-inputs">
+                    <div class="form-group">
+                        <label for="startId">From ID</label>
+                        <input type="number" id="startId" min="1" max="67" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="endId">To ID</label>
+                        <input type="number" id="endId" min="1" max="67" value="5">
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeRangeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="startBatchDownload()">Start Batch Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Application Script -->
+    <script>
+        const BASE_URL = "https://pcdrive.m-jihad3k.workers.dev/bot/bot";
+        const TOTAL_BOTS = 67;
+        let currentFilterRange = 'all';
+
+        // Initialize Bot Grid
+        function initGrid() {
+            const grid = document.getElementById('botGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= TOTAL_BOTS; i++) {
+                const downloadUrl = `${BASE_URL}${i}.zip`;
+                const filename = `bot${i}.zip`;
+                
+                const card = document.createElement('div');
+                card.className = 'bot-card';
+                card.dataset.id = i;
+                card.dataset.name = `bot${i}`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header">
+                            <div class="file-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <span class="bot-id-badge">ID #${String(i).padStart(2, '0')}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Bot Package #${i}</h3>
+                            <div class="filename">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                    <polyline points="13 2 13 9 20 9"></polyline>
+                                </svg>
+                                ${filename}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="${downloadUrl}" download="${filename}" class="download-btn" onclick="handleDownload(event, ${i}, '${downloadUrl}')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download
+                        </a>
+                        <button class="copy-btn" title="Copy Direct Download Link" onclick="copyLink('${downloadUrl}', ${i})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            }
+            updateVisibleCount();
+        }
+
+        // Handle Download Action
+        function handleDownload(e, id, url) {
+            showToast(`Downloading bot${id}.zip...`);
+        }
+
+        // Copy Single Link
+        function copyLink(url, id) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast(`Copied bot${id}.zip link to clipboard!`);
+            }).catch(err => {
+                showToast(`Failed to copy link`, 'error');
+            });
+        }
+
+        // Copy All 67 Download Links
+        function copyAllLinks() {
+            let links = [];
+            for (let i = 1; i <= TOTAL_BOTS; i++) {
+                links.push(`${BASE_URL}${i}.zip`);
+            }
+            navigator.clipboard.writeText(links.join('\n')).then(() => {
+                showToast(`All 67 download links copied to clipboard!`);
+            });
+        }
+
+        // Search Filter Logic
+        function filterBots() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const cards = document.querySelectorAll('.bot-card');
+            let visible = 0;
+
+            cards.forEach(card => {
+                const id = parseInt(card.dataset.id);
+                const name = card.dataset.name;
+
+                let matchesRange = true;
+                if (currentFilterRange === '1-20') matchesRange = id >= 1 && id <= 20;
+                else if (currentFilterRange === '21-40') matchesRange = id >= 21 && id <= 40;
+                else if (currentFilterRange === '41-67') matchesRange = id >= 41 && id <= 67;
+
+                let matchesQuery = true;
+                if (query !== '') {
+                    matchesQuery = name.includes(query) || String(id).includes(query);
+                }
+
+                if (matchesRange && matchesQuery) {
+                    card.style.display = 'flex';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('emptyState').style.display = visible === 0 ? 'block' : 'none';
+            document.getElementById('visibleCount').textContent = visible;
+        }
+
+        // Filter Tabs
+        function setFilter(range, btn) {
+            currentFilterRange = range;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterBots();
+        }
+
+        function updateVisibleCount() {
+            const visible = document.querySelectorAll('.bot-card[style*="display: flex"]').length || TOTAL_BOTS;
+            document.getElementById('visibleCount').textContent = visible;
+        }
+
+        // Modal Controls
+        function openRangeModal() {
+            document.getElementById('rangeModal').classList.add('active');
+        }
+
+        function closeRangeModal() {
+            document.getElementById('rangeModal').classList.remove('active');
+        }
+
+        // Batch Download Execution
+        function startBatchDownload() {
+            const start = parseInt(document.getElementById('startId').value) || 1;
+            const end = parseInt(document.getElementById('endId').value) || 67;
+
+            if (start < 1 || end > 67 || start > end) {
+                showToast("Please enter a valid ID range between 1 and 67", "error");
+                return;
+            }
+
+            closeRangeModal();
+            showToast(`Starting batch download for Bot #${start} to #${end}...`);
+
+            let count = 0;
+            const totalToDownload = end - start + 1;
+
+            for (let i = start; i <= end; i++) {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = `${BASE_URL}${i}.zip`;
+                    link.download = `bot${i}.zip`;
+                    link.target = "_blank";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    count++;
+                }, (i - start) * 400); // 400ms delay between downloads to prevent popup blocks
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${type === 'error' ? '#ef4444' : '#10b981'}" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                if (container.contains(toast)) {
+                    container.removeChild(toast);
+                }
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initGrid();
+        });
+    </script>
+</body>
+</html>
